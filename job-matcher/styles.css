@@ -1,0 +1,266 @@
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #22263a;
+  --border: #2e3250;
+  --accent: #4f7df3;
+  --accent-hover: #6b93ff;
+  --green: #34d399;
+  --yellow: #fbbf24;
+  --red: #f87171;
+  --text: #e2e8f0;
+  --muted: #8892a4;
+  --radius: 10px;
+  --font: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 24px 16px 60px;
+}
+
+#app {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Header ── */
+header h1 { font-size: 1.8rem; font-weight: 700; }
+header .subtitle { color: var(--muted); margin-top: 4px; }
+
+/* ── Panels ── */
+section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+
+section h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* ── CV Grid ── */
+.cv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 580px) { .cv-grid { grid-template-columns: 1fr; } }
+
+.cv-item { display: flex; flex-direction: column; gap: 1px; }
+.label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+
+/* ── Keywords ── */
+.keywords-block { margin-top: 4px; }
+#keyword-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin: 8px 0;
+}
+
+.tag {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+#keyword-editor { margin-top: 10px; }
+#keyword-editor textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  padding: 8px;
+  font-family: var(--font);
+  font-size: 13px;
+  resize: vertical;
+}
+
+/* ── Search Grid ── */
+.search-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 580px) { .search-grid { grid-template-columns: 1fr; } }
+
+.field-group { display: flex; flex-direction: column; gap: 4px; }
+.field-group label { font-size: 12px; color: var(--muted); }
+
+input[type="text"], input[type="number"], select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  padding: 7px 10px;
+  font-size: 13px;
+  font-family: var(--font);
+  outline: none;
+  transition: border-color .15s;
+}
+input:focus, select:focus { border-color: var(--accent); }
+
+/* ── Buttons ── */
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn-small {
+  background: var(--surface2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.btn-small:hover { color: var(--text); border-color: var(--accent); }
+
+/* ── Sort Bar ── */
+#sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.sort-btn {
+  background: var(--surface2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.sort-btn:hover, .sort-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ── Result Cards ── */
+.result-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 16px;
+  transition: border-color .15s;
+}
+.result-card:hover { border-color: var(--accent); }
+
+.card-main { grid-column: 1; }
+.card-score { grid-column: 2; display: flex; align-items: flex-start; }
+
+.job-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.job-title a { color: inherit; text-decoration: none; }
+.job-title a:hover { color: var(--accent); }
+
+.job-meta {
+  display: flex; flex-wrap: wrap; gap: 6px 16px;
+  font-size: 12px; color: var(--muted);
+  margin-top: 4px;
+}
+
+.job-salary { color: var(--green); font-weight: 500; }
+
+.match-tags {
+  display: flex; flex-wrap: wrap; gap: 5px;
+  margin-top: 8px;
+}
+
+.match-tag {
+  background: rgba(79,125,243,.15);
+  border: 1px solid rgba(79,125,243,.3);
+  color: #a5b4fc;
+  border-radius: 20px;
+  padding: 1px 9px;
+  font-size: 11px;
+}
+
+/* ── Score Badge ── */
+.score-badge {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  border: 2px solid;
+  flex-shrink: 0;
+}
+.score-high   { border-color: var(--green); color: var(--green); }
+.score-mid    { border-color: var(--yellow); color: var(--yellow); }
+.score-low    { border-color: var(--red); color: var(--red); }
+
+.score-badge small { font-size: 9px; font-weight: 400; opacity: .75; }
+
+/* ── Misc ── */
+.placeholder { color: var(--muted); text-align: center; padding: 32px 0; }
+.hidden { display: none !important; }
+#result-count { color: var(--muted); font-size: .85rem; font-weight: 400; }
+
+/* Loading spinner */
+.spinner {
+  width: 28px; height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  margin: 32px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-msg {
+  color: var(--red);
+  background: rgba(248,113,113,.08);
+  border: 1px solid rgba(248,113,113,.25);
+  border-radius: 8px;
+  padding: 12px 16px;
+}

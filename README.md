@@ -50,6 +50,60 @@ about how function calling is used to call the Maps Embed API here!
 To develop locally, insert your Gemini API key where you see `your_key_here` in
 the `script.js` file.
 
+## Job Matcher
+
+[Job Matcher](/job-matcher/) is a self-contained HTML/JS applet that searches
+job listings and scores them against a candidate CV profile using keyword
+matching. No build step required — open `index.html` directly in a browser.
+
+### How to run
+
+```bash
+# Option 1 – open directly
+open job-matcher/index.html
+
+# Option 2 – serve locally (avoids any browser CORS restrictions)
+npx serve job-matcher
+# then visit http://localhost:3000
+```
+
+### Demo mode (no API key needed)
+
+Select **Demo / Mock Data** in the *Data Source* dropdown and click
+**Search Jobs**. The applet ships with 10 realistic mock listings for the
+NT/Darwin region so you can explore the interface straight away.
+
+### Live mode – Adzuna API
+
+1. Register for a free key at <https://developer.adzuna.com/>
+2. Select **Adzuna API** in the *Data Source* dropdown
+3. Enter your **App ID** and **App Key**
+4. Adjust the *Search Query* and *Location* fields, then click **Search Jobs**
+
+### How to update the CV keywords
+
+**Via the UI:** Click the **Edit Keywords** button in the *CV Profile* panel,
+edit the comma-separated list, and click **Save**. Changes take effect
+immediately and re-score any displayed results.
+
+**Via code:** Open `job-matcher/script.js` and edit the `keywords` array
+inside the `CV_PROFILE` object at the top of the file:
+
+```js
+const CV_PROFILE = {
+  keywords: [
+    "ranger",
+    "events manager",
+    // add or remove keywords here …
+  ],
+  // …
+};
+```
+
+The scoring engine counts how many keywords appear in each job's title,
+company, location, and description. Title matches are counted twice for
+higher weighting. Scores are displayed as a percentage badge on each card.
+
 ### Contributors
 
 - [@bencobley](https://github.com/bencobley)

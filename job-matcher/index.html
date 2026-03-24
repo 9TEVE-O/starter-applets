@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Matcher – Steve's CV</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>🔍 Job Matcher</h1>
+      <p class="subtitle">Matching jobs against Steve's CV profile</p>
+    </header>
+
+    <section id="cv-panel">
+      <h2>CV Profile</h2>
+      <div class="cv-grid">
+        <div class="cv-item"><span class="label">Name</span><span>Steve</span></div>
+        <div class="cv-item"><span class="label">Location</span><span>Palmerston / Darwin, NT, Australia</span></div>
+        <div class="cv-item"><span class="label">Role</span><span>Ranger Level 4 / Events &amp; Operations Specialist</span></div>
+        <div class="cv-item"><span class="label">Experience</span><span>14+ years — events, operations, regulatory enforcement</span></div>
+        <div class="cv-item"><span class="label">Target Salary</span><span>$90,000 AUD/year</span></div>
+        <div class="cv-item"><span class="label">Work Mode</span><span>Palmerston/Darwin, open to remote/hybrid</span></div>
+      </div>
+      <div class="keywords-block">
+        <span class="label">Key Skills / Keywords</span>
+        <div id="keyword-tags"></div>
+        <button id="edit-keywords-btn" class="btn-small">Edit Keywords</button>
+      </div>
+      <div id="keyword-editor" class="hidden">
+        <textarea id="keyword-input" rows="4"></textarea>
+        <button id="save-keywords-btn" class="btn-small">Save</button>
+      </div>
+    </section>
+
+    <section id="search-panel">
+      <h2>Search Settings</h2>
+      <div class="search-grid">
+        <div class="field-group">
+          <label for="api-source">Data Source</label>
+          <select id="api-source">
+            <option value="demo">Demo / Mock Data (no API key needed)</option>
+            <option value="adzuna">Adzuna API (free key required)</option>
+          </select>
+        </div>
+        <div class="field-group" id="adzuna-fields" style="display:none">
+          <label for="adzuna-app-id">Adzuna App ID</label>
+          <input type="text" id="adzuna-app-id" placeholder="your_app_id" />
+          <label for="adzuna-app-key" style="margin-top:6px">Adzuna App Key</label>
+          <input type="text" id="adzuna-app-key" placeholder="your_app_key" />
+        </div>
+        <div class="field-group">
+          <label for="search-query">Search Query</label>
+          <input type="text" id="search-query" value="ranger events operations manager" />
+        </div>
+        <div class="field-group">
+          <label for="search-location">Location</label>
+          <input type="text" id="search-location" value="Darwin NT" />
+        </div>
+        <div class="field-group">
+          <label for="min-score">Min Match Score (%)</label>
+          <input type="number" id="min-score" value="20" min="0" max="100" />
+        </div>
+      </div>
+      <button id="search-btn" class="btn-primary">Search Jobs</button>
+    </section>
+
+    <section id="results-panel">
+      <h2>Results <span id="result-count"></span></h2>
+      <div id="sort-bar" class="hidden">
+        Sort by:
+        <button class="sort-btn active" data-sort="score">Match Score</button>
+        <button class="sort-btn" data-sort="title">Title</button>
+        <button class="sort-btn" data-sort="salary">Salary</button>
+      </div>
+      <div id="results-container">
+        <p class="placeholder">Run a search to see matching jobs.</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js" type="module"></script>
+</body>
+</html>
