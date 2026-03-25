@@ -192,7 +192,7 @@ function scoreJob(job, keywords) {
 
   const rawScore =
     (matched.length + titleMatches.length) /
-    (keywords.length + titleMatches.length) || 0;
+    keywords.length || 0;
 
   const pct = Math.min(100, Math.round(rawScore * 100 * 1.4)); // scale for readability
   return { score: pct, matchedKeywords: matched };
@@ -207,12 +207,11 @@ async function fetchAdzuna(appId, appKey, query, location) {
     results_per_page: 20,
     what: query,
     where: location,
-    content_type: "application/json",
   });
 
   const url = `https://api.adzuna.com/v1/api/jobs/au/search/1?${params}`;
 
-  const res = await fetch(url);
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
   if (!res.ok) throw new Error(`Adzuna API error: ${res.status} ${res.statusText}`);
 
   const data = await res.json();
@@ -234,6 +233,23 @@ async function fetchAdzuna(appId, appKey, query, location) {
   }));
 }
 
+// ─── HTML Helpers ────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function safeUrl(url) {
+  try {
+    const u = new URL(url);
+    if (u.protocol === "https:" || u.protocol === "http:") return esc(url);
+  } catch (_) { /* fall through */ }
+  return "#";
+}
+
 // ─── Render Helpers ──────────────────────────────────────────────────────────
 function scoreClass(pct) {
   if (pct >= 60) return "score-high";
@@ -244,24 +260,24 @@ function scoreClass(pct) {
 function renderCard(job, score, matchedKeywords) {
   const tagHtml = matchedKeywords
     .slice(0, 8)
-    .map((k) => `<span class="match-tag">${k}</span>`)
+    .map((k) => `<span class="match-tag">${esc(k)}</span>`)
     .join("");
 
   const salaryHtml = job.salary
-    ? `<span class="job-salary">💰 ${job.salary}</span>`
+    ? `<span class="job-salary">💰 ${esc(job.salary)}</span>`
     : "";
 
   return `
     <div class="result-card">
       <div class="card-main">
         <div class="job-title">
-          <a href="${job.url}" target="_blank" rel="noopener">${job.title}</a>
+          <a href="${safeUrl(job.url)}" target="_blank" rel="noopener">${esc(job.title)}</a>
         </div>
         <div class="job-meta">
-          <span>🏢 ${job.company}</span>
-          <span>📍 ${job.location}</span>
+          <span>🏢 ${esc(job.company)}</span>
+          <span>📍 ${esc(job.location)}</span>
           ${salaryHtml}
-          <span style="color:var(--muted)">via ${job.source}</span>
+          <span style="color:var(--muted)">via ${esc(job.source)}</span>
         </div>
         <div class="match-tags">${tagHtml || '<span style="color:var(--muted);font-size:11px">no keyword matches</span>'}</div>
       </div>
@@ -293,7 +309,7 @@ const sortBar = document.getElementById("sort-bar");
 
 function renderKeywordTags() {
   keywordTagsEl.innerHTML = keywords
-    .map((k) => `<span class="tag">${k}</span>`)
+    .map((k) => `<span class="tag">${esc(k)}</span>`)
     .join("");
 }
 
@@ -309,8 +325,8 @@ function renderResults() {
     if (sortKey === "score") return b.score - a.score;
     if (sortKey === "title") return a.job.title.localeCompare(b.job.title);
     if (sortKey === "salary") {
-      const salA = a.job.salary ? parseInt(a.job.salary.replace(/\D+/g, "")) : 0;
-      const salB = b.job.salary ? parseInt(b.job.salary.replace(/\D+/g, "")) : 0;
+      const salA = a.job.salary ? parseInt(a.job.salary.replace(/[^0-9].*/, ""), 10) : 0;
+      const salB = b.job.salary ? parseInt(b.job.salary.replace(/[^0-9].*/, ""), 10) : 0;
       return salB - salA;
     }
     return 0;
@@ -407,7 +423,7 @@ searchBtn.addEventListener("click", async () => {
 
     renderResults();
   } catch (err) {
-    resultsContainer.innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+    resultsContainer.innerHTML = `<div class="error-msg">Error: ${esc(err.message)}</div>`;
     resultCount.textContent = "";
   } finally {
     searchBtn.disabled = false;
