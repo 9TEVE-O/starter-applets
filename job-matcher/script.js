@@ -326,7 +326,7 @@ function renderResults() {
     if (sortKey === "title") return a.job.title.localeCompare(b.job.title);
     if (sortKey === "salary") {
       const salA = a.job.salary ? parseInt(a.job.salary.replace(/[^0-9].*/, ""), 10) : 0;
-      const salB = b.job.salary ? parseInt(b.job.salary.replace(/[^0-9].*/, ""), 10) : 0;
+      const salB = b.job.salary ? parseInt(b.job.salary.replace(/^[^0-9]+/, ""), 10) : 0;
       return salB - salA;
     }
     return 0;
