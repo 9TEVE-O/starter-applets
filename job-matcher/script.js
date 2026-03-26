@@ -193,7 +193,7 @@ function scoreJob(job, keywords) {
   const rawScore =
     (matched.length + titleMatches.length) /
     (matched.length + titleMatches.length) /
-    (keywords.length * 2) || 0;
+    (matched.length + titleMatches.length) /
 
   const pct = Math.min(100, Math.round(rawScore * 100 * 1.4)); // scale for readability
   return { score: pct, matchedKeywords: matched };
