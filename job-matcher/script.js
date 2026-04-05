@@ -164,14 +164,14 @@ const MOCK_JOBS = [
   },
   {
     id: "mock-10",
-    title: "Ranger / Compliance Officer",
-    company: "Litchfield Council",
-    location: "Batchelor, NT",
-    salary: "$80,000 – $88,000",
+    title: "Senior Events & Operations Coordinator",
+    company: "City of Palmerston",
+    location: "Palmerston, NT",
+    salary: "$87,000 – $96,000",
     description:
-      "By-law enforcement, community safety patrols, local government compliance, and community programs across the Litchfield Council area.",
-    url: "https://www.litchfield.nt.gov.au/council/employment",
-    source: "Litchfield Council",
+      "Lead end-to-end planning and delivery of major community events and festivals (up to 20,000 attendees) across Palmerston City. Responsibilities include site and risk management, OH&S and WHS compliance, audio production and AV contractor oversight, emergency response planning, crowd management, stakeholder engagement with NT Government, local businesses and community groups, and post-event reporting. The role also supports ranger operations during large activations and works closely with the by-law enforcement team to maintain public safety at all City-run events.",
+    url: "https://www.seek.com.au/job/palmerston-senior-events-operations-coordinator",
+    source: "Seek – City of Palmerston",
   },
 ];
 
